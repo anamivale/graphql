@@ -8,6 +8,45 @@
 
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="profile.css">
+<style>
+    svg {
+            background: #fff;
+            border: 1px solid #ccc;
+        }
+
+        text {
+            font-size: 12px;
+            fill: #333;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        
+        .pie-slice {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            transform-origin: center;
+        }
+        
+        .pie-slice:hover {
+            transform: scale(1.05);
+        }
+        
+        .slice-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            fill: white;
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+</style>
+    
 </head>
 
 <body id="body">
