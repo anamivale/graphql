@@ -65,12 +65,7 @@ export function dashboardPage(){
             </div>
         </div>
 
-        <!-- XP Chart -->
-        <h2 class="section-title" style="margin-top: 40px;">XP Progression</h2>
-        <div class="card xp-chart">
-            Chart Placeholder
-        </div>
-
+       
         <!-- Best Skills + Audit -->
         <div class="grid grid-2" style="margin-top: 40px;">
             <div class="card">
@@ -78,20 +73,25 @@ export function dashboardPage(){
                 <ul class="skills-list">
                     <li><span>Programming</span> <span id="pro"></span></li>
                     <li><span>Go</span> <span id="go"></span></li>
+                    <li><span>Back-end</span> <span id="back_end"></span></li>
                     <li><span>Front-end</span> <span id="front_end"></span></li>
                     <li><span>Javascropt</span> <span id="js"></span></li>
-                    <li><span>Back-end</span> <span id="back_end"></span></li>
                 </ul>
             </div>
             <div class="card">
                 <h3 class="section-title">Audit Ratio</h3>
                 <div class="audit-chart">
-                    Audit Ratio: 0.9<br>
-                    Done: 2.05MB (47.1%)<br>
-                    Received: 2.30MB (52.9%)
+                    <svg id="pieChart" width="400" height="400" viewBox="0 0 400 400"></svg>
                 </div>
             </div>
+            
         </div>
+         <!-- XP Chart -->
+        <h2 class="section-title" style="margin-top: 40px;">XP earned by project</h2>
+        <div class="card xp-chart">
+            <svg id="barChart" width="1000" height="400"></svg>
+        </div>
+
     </div>
     `
 }
