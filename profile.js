@@ -1,3 +1,4 @@
+import { createPieChart,  getProjectsAndXp } from "./graphs.js";
 import { dashboardPage, loginPage } from "./templates.js";
 
 function login() {
@@ -39,6 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem('jwt');
     if (token) {
         queryUserTable()
+        fetchGrade(token)
+        getProjectsAndXp(token)
+        FetchTransactionData(token)
     } else {
         login()
 
@@ -78,7 +82,7 @@ async function queryUserTable() {
 
     const user = data1.data.user[0];
     FetchUserData(user)
-    await FetchTransactionData(token)
+
 
 }
 
@@ -115,13 +119,12 @@ async function FetchTransactionData(token) {
         body: JSON.stringify({
             query: `
         {
-  transaction(where: {eventId: {_eq: 75}}, order_by: {createdAt: desc}) {
+  transaction(where: {eventId: {_eq: 75}}) {
            type
            amount
            path
            createdAt
            eventId
-           grade
           }
         }
       `
@@ -131,10 +134,10 @@ async function FetchTransactionData(token) {
     const data = await response.json();
     let transactions = data.data.transaction
     let level = 0
-    let skill_front_end =0
-    let skill_go=0
-    let skill_back_end=0
-    let skill_js=0
+    let skill_front_end = 0
+    let skill_go = 0
+    let skill_back_end = 0
+    let skill_js = 0
     let skill_prog = 0
     let xp = new Array()
     let up_audit = new Array()
@@ -143,43 +146,44 @@ async function FetchTransactionData(token) {
     for (let i = 0; i < transactions.length; i++) {
 
 
-            if (transactions[i].type == "xp") {
+        if (transactions[i].type == "xp") {
 
-                xp.push(transactions[i].amount)
-
-            }
-            if (transactions[i].type == "up") {
-                up_audit.push(transactions[i].amount)
-
-            }
-            if (transactions[i].type == "down") {
-                down_audit.push(transactions[i].amount)
-
-            }
-
-            if (transactions[i].type == "level") {
-                
-                level =Math.max(Number(transactions[i].amount), level)
-            }
-            if (transactions[i].type == "skill_front-end") {
-                skill_front_end = Math.max(Number(transactions[i].amount), skill_front_end)
-            }
-            if (transactions[i].type == "skill_back-end") {
-                skill_back_end = Math.max(Number(transactions[i].amount), skill_back_end)
-            }
-            if (transactions[i].type == "skill_go") {
-                skill_go = Math.max(Number(transactions[i].amount), skill_go)
-            }
+            xp.push(transactions[i].amount)
 
 
-            if (transactions[i].type == "skill_js") {
-                skill_js = Math.max(Number(transactions[i].amount), skill_js)
-            }
+        }
+        if (transactions[i].type == "up") {
+            up_audit.push(transactions[i].amount)
 
-            if (transactions[i].type == "skill_prog") {
-                skill_prog = Math.max(Number(transactions[i].amount), skill_prog)
-            }
-        
+        }
+        if (transactions[i].type == "down") {
+            down_audit.push(transactions[i].amount)
+
+        }
+
+        if (transactions[i].type == "level") {
+
+            level = Math.max(Number(transactions[i].amount), level)
+        }
+        if (transactions[i].type == "skill_front-end") {
+            skill_front_end = Math.max(Number(transactions[i].amount), skill_front_end)
+        }
+        if (transactions[i].type == "skill_back-end") {
+            skill_back_end = Math.max(Number(transactions[i].amount), skill_back_end)
+        }
+        if (transactions[i].type == "skill_go") {
+            skill_go = Math.max(Number(transactions[i].amount), skill_go)
+        }
+
+
+        if (transactions[i].type == "skill_js") {
+            skill_js = Math.max(Number(transactions[i].amount), skill_js)
+        }
+
+        if (transactions[i].type == "skill_prog") {
+            skill_prog = Math.max(Number(transactions[i].amount), skill_prog)
+        }
+
     }
 
     //skills ui
@@ -213,8 +217,8 @@ async function FetchTransactionData(token) {
 
     //xp
     let sumXp = xp.reduce((acc, val) => acc + val, 0)
-    console.log(sumXp / 1024);
     document.getElementById("xp").textContent = (sumXp / (1000000)).toFixed(2)
+
 
 
     let sumDownRatio = down_audit.reduce((acc, val) => acc + val, 0)
@@ -222,5 +226,34 @@ async function FetchTransactionData(token) {
     let sumUpRatio = up_audit.reduce((acc, val) => acc + val, 0)
 
     let auditRatio = (sumUpRatio / 1024) / (sumDownRatio / 1024);
+createPieChart(sumDownRatio, sumUpRatio, auditRatio)
+}
+
+
+async function fetchGrade(token) {
+    const response = await fetch('https://learn.zone01kisumu.ke/api/graphql-engine/v1/graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            query: `
+        {
+      progress(where: {eventId: {_eq : 75}, grade :{_is_null: false}}) {
+           eventId
+           grade
+          }
+        }
+      `
+        })
+    });
+
+    const data = await response.json();
+    let progress = data.data.progress
+
+    let sumGrades = progress.reduce((acc, val) => acc + val.grade, 0)
+
+    document.getElementById("grade").textContent = sumGrades.toFixed(0)
 
 }
