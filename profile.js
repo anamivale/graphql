@@ -1,3 +1,4 @@
+import { getPendingAudits } from "./audit.js";
 import { createPieChart,  getProjectsAndXp } from "./graphs.js";
 import { dashboardPage, loginPage } from "./templates.js";
 
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchGrade(token)
         getProjectsAndXp(token)
         FetchTransactionData(token)
+        getPendingAudits(token)
     } else {
         login()
 
