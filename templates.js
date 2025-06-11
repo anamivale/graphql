@@ -34,8 +34,8 @@ export function loginPage(){
 export function dashboardPage(){
     return `
 <div class="toolbar">
-      <span>Module Controls</span>
-      <div style="margin-left: auto; position: relative;">
+      <span id="nav-profile">Profile</span>
+      <div style="margin-left: auto; position: relative; display:flex; gap:2">
         <button class="clock-button" id="auditButton">
           <svg class="clock-icon" viewBox="0 0 24 24" >
             <path
@@ -43,25 +43,16 @@ export function dashboardPage(){
           </svg>
           <span id="total">1</span>
         </button>
+        <button id = "logout">Logout</button>
 
         <div class="audit-dropdown" id="auditDropdown">
           <div class="audit-header">
             Audits to complete
           </div>
 
-          <div class="audit-section">
-            <div class="audit-section-title">Pending</div>
-            <div class="audit-item pending">
-              <svg class="audit-icon" viewBox="0 0 24 24">
-                <path
-                  d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.7L16.2,16.2Z" />
-              </svg>
-              <div class="audit-content">
-                <div class="audit-title">real-time-forum-typing-in-p...</div>
-                <div class="audit-subtitle">Module GraphQL review required</div>
-              </div>
-              <div class="audit-time">2h ago</div>
-            </div>
+          <div class="audit-section" id="audit-section">
+           
+            
           </div>
 
 
