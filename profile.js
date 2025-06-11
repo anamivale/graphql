@@ -1,5 +1,5 @@
 import { getPendingAudits } from "./audit.js";
-import { createPieChart,  getProjectsAndXp } from "./graphs.js";
+import { createPieChart, getProjectsAndXp } from "./graphs.js";
 import { dashboardPage, loginPage } from "./templates.js";
 
 function login() {
@@ -22,11 +22,13 @@ function login() {
             const data = await response.json();
 
             if (response.ok) {
-                alert('Login successful!');
-                console.log('JWT:', data);
                 localStorage.setItem('jwt', data);
 
                 await queryUserTable()
+                fetchGrade(data)
+                getProjectsAndXp(data)
+                FetchTransactionData(data)
+                getPendingAudits(data)
             } else {
                 alert(`Login failed: ${data.message || 'Invalid credentials'}`);
             }
@@ -37,24 +39,12 @@ function login() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-        queryUserTable()
-        fetchGrade(token)
-        getProjectsAndXp(token)
-        FetchTransactionData(token)
-        getPendingAudits(token)
-    } else {
-        login()
-
-    }
-
-
-})
-
 
 async function queryUserTable() {
+
+
+
+
     const token = localStorage.getItem('jwt');
     document.getElementById("body").innerHTML = dashboardPage()
 
@@ -84,6 +74,12 @@ async function queryUserTable() {
 
     const user = data1.data.user[0];
     FetchUserData(user)
+
+
+    document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem('jwt');
+        login()
+    })
 
 
 }
@@ -228,7 +224,7 @@ async function FetchTransactionData(token) {
     let sumUpRatio = up_audit.reduce((acc, val) => acc + val, 0)
 
     let auditRatio = (sumUpRatio / 1024) / (sumDownRatio / 1024);
-createPieChart(sumDownRatio, sumUpRatio, auditRatio)
+    createPieChart(sumDownRatio, sumUpRatio, auditRatio)
 }
 
 
@@ -259,3 +255,23 @@ async function fetchGrade(token) {
     document.getElementById("grade").textContent = sumGrades.toFixed(0)
 
 }
+document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+        queryUserTable()
+        fetchGrade(token)
+        getProjectsAndXp(token)
+        FetchTransactionData(token)
+        getPendingAudits(token)
+
+
+        //logout
+
+    } else {
+        login()
+
+    }
+
+
+})
+
