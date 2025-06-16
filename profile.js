@@ -96,12 +96,14 @@ function FetchUserData(user) {
     document.getElementById("username").textContent = user.login
     document.getElementById("phone").textContent = user.attrs.phone
     document.getElementById("email").textContent = user.attrs.email
-    document.getElementById("dob").textContent = user.attrs.dateOfBirth
+    document.getElementById("dob").textContent = user.attrs.dateOfBirth.split("T")[0]
     document.getElementById("gender").textContent = user.attrs.gender
     document.getElementById("country").textContent = user.attrs.country
 
 
 }
+
+
 
 
 
