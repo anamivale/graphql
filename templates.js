@@ -58,7 +58,7 @@ export function dashboardPage(){
 
         </div>
       </div>
-    </div>profile
+    </div>
   <div class="container">
     <!-- Nav bar -->
    
