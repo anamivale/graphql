@@ -34,7 +34,7 @@ export function loginPage(){
 export function dashboardPage(){
     return `
 <div class="toolbar">
-      <span id="nav-profile">Profile</span>
+      <span id="nav-profile">Profile Dashboard</span>
       <div style="margin-left: auto; position: relative; display:flex; gap:2">
         <button class="clock-button" id="auditButton">
           <svg class="clock-icon" viewBox="0 0 24 24" >
@@ -58,7 +58,7 @@ export function dashboardPage(){
 
         </div>
       </div>
-    </div>
+    </div>profile
   <div class="container">
     <!-- Nav bar -->
    
