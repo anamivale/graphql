@@ -393,3 +393,32 @@ strong{
 	margin-right: 5px;
 }
 
+/* Add to existing CSS */
+.audit-chart {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* Aspect ratio 1:1 */
+}
+
+.audit-chart svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.xp-chart {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .audit-chart {
+        padding-bottom: 120%; /* Slightly taller on mobile */
+    }
+    
+    .xp-chart svg {
+        min-width: 800px; /* Minimum scrollable width */
+    }
+}
