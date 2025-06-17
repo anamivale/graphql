@@ -235,7 +235,7 @@ body {
   }
  
   #logout:hover {
-	font-size: 20px;
+	text-decoration: underline;
   }
  
   @media (max-width: 768px) {
@@ -347,7 +347,6 @@ body {
 	padding: 10px;
 	padding-left: 24px;
 	font-weight: 700;
-	width: 75%;
 	transition: .2s;
 }
 
@@ -415,10 +414,10 @@ strong{
 
 @media (max-width: 768px) {
     .audit-chart {
-        padding-bottom: 120%; /* Slightly taller on mobile */
+        padding-bottom: 120%;
     }
     
     .xp-chart svg {
-        min-width: 800px; /* Minimum scrollable width */
+        min-width: 800px; 
     }
 }

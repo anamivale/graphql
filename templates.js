@@ -4,6 +4,10 @@ export function loginPage(){
         <div class="screen">
             <div class="screen__content">
                 <div class="login">
+                <div class="login__field">
+                        <h3 >Welcome back</h3>
+                        
+                    </div>
                     <div class="login__field">
                         <i class="login__icon fas fa-user"></i>
                         <input type="text" class="login__input" placeholder="User name / Email" id="uname">
